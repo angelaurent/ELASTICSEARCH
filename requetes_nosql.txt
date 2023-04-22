@@ -1,0 +1,150 @@
+#LIRE LES DOCUMENTS DE MON INDEX
+GET _search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+#TROUVEZ LES FILMS DONT LE TITRE EST  "The Conjuring" 
+GET /movies/_search
+{
+  "query": {
+    "match": {
+      "fields.title": "The Conjuring"
+    }
+  }
+}
+
+#TROUVEZ LES FILMS DONT LE TITRE EST "The Amazing Spider-Man 2" ET DONT LE REALISATEUR EST "Marc Webb"
+GET /movies/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        { "match": { "fields.title": "The Amazing Spider-Man 2" } },
+        { "match": { "fields.directors": "Marc Webb" } }
+      ]
+    }
+  }
+}
+
+#TROUVEZ LES FILMS DANS LESQUELS  “Julianne Moore” A JOUE  ET DONT LE RESUME (plot) CONTIENT “Jones” MAIS PAS LE MOT “Nazis”
+GET /movies/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+          "fields.actors": "Julianne Moore"
+          }
+        },
+        {
+          "match": {
+          "fields.plot": "Jones"
+          }
+        }
+      ],
+      "must_not": [
+        {
+        "match": {
+        "fields.plot": "Nazis"
+          }
+        }
+      ]
+    }
+  }
+}
+
+#TROUVEZ LE FILM DE “James Cameron” DONT LE RANG DEVRAIT ETRE INFERIEUR A 1000
+GET /movies/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "fields.actors": "James Cameron"
+          }
+        },
+        {
+          "range": {
+            "fields.rank": {
+              "lt": 1000
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+
+#TROUVEZ LES FILMS DE “Quentin Tarantino” DONT LA NOTE (rating) DOIT ETRE SUPERIEUR A 5, SANS ETRE UN FILM D'ACTION ET DE DRAME
+GET /movies/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        { "match": { "fields.actors": "Quentin Tarantino" } },
+        { "range": { "fields.rating": { "gt": 5 } } }
+      ],
+      "must_not": [
+        { "match": { "fields.genres": "Action" } },
+        { "match": { "fields.genres": "Drama" } }
+      ]
+    }
+  }
+}
+
+#TROUVEZ LES FILMS de “J.J. Abrams” SORTIS (released) ENTRE 2010 et 2015
+GET /movies/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "fields.actors": "J.J. Abrams"
+          }
+        },
+        {
+          "range": {
+            "fields.release_date": {
+              "gte": "2010-01-01T00:00:00Z",
+              "lte": "2015-12-31T23:59:59Z"
+            }
+          }
+        }
+      ]
+    }
+  }
+}
+
+#SUPPRIMER LE FILM DONT L'ID EST LE SUIVANT
+DELETE /movies/_doc/e1dUTIcBdO_ETa5809c4
+#VERIFIER LA SUPPRESSION
+GET /movies/_doc/e1dUTIcBdO_ETa5809c4
+
+#MODIFICATION DU TITRE DU FILM DONT L'ID EST LE SUIVANT
+POST /movies/_update/lVdUTIcBdO_ETa5809c4
+{
+  "doc": {
+    "title": "maman j'ai faim"
+  }
+}
+#VERIFIER LA MODIFICATION
+GET /movies/_doc/lVdUTIcBdO_ETa5809c4
+
+#AJOUT DE  1.0 AU CHAMP RATING DU DOCUMENT OU l'ID EST LE SUIVANT
+{
+  "script": {
+    "source": "ctx._source.fields.rating += params.new_rating",
+    "lang": "painless",
+    "params": {
+      "new_rating": 1.0
+    }
+  }
+}
+#VERIFIER LA MODIFICATION
+GET /movies/_doc/L1dUTIcBdO_ETa5809g4
