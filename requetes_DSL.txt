@@ -1,3 +1,5 @@
+#QUELQUES REQUETES 
+
 #LIRE LES DOCUMENTS DE MON INDEX
 GET _search
 {
@@ -123,6 +125,7 @@ GET /movies/_search
 
 #SUPPRIMER LE FILM DONT L'ID EST LE SUIVANT
 DELETE /movies/_doc/e1dUTIcBdO_ETa5809c4
+
 #VERIFIER LA SUPPRESSION
 GET /movies/_doc/e1dUTIcBdO_ETa5809c4
 
@@ -133,6 +136,7 @@ POST /movies/_update/lVdUTIcBdO_ETa5809c4
     "title": "maman j'ai faim"
   }
 }
+
 #VERIFIER LA MODIFICATION
 GET /movies/_doc/lVdUTIcBdO_ETa5809c4
 
