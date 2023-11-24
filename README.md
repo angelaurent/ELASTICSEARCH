@@ -15,11 +15,7 @@ Logiciel écrit en JAVA.
 permet le stockage de données sous forme JSON ou XML
 Open source.
 permet d'effectuer des recherches rapides car dispose d'Apache LUCENE pour l'indexation et la recherche de données.
-
-# cette base de donnees dispose de son langage de requete appelé : DOMAIN SPECIFIC LANGUAGE (DSL)  
-Le format ressemble à l'écriture d'un document JSON.Très flexible et permet de réaliser des recherches simples ou complexes en combinant des filtres, des agrégations, des suggestions,
-des fonctions de score et bien plus encore. 
-
+ 
 #UTILISATION DE KIBANA (Pour faciliter nos operations sur cette base de données nous avons utiliser le client kibana que nous avons aussi installer sur docker)
 Outil de visualisation et de gestion des données pour ElasticSearch. 
 Fournit une interface graphique accessible par un navigateur web à l’URL http//:localhost:5605.
